@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 
-
+# OUTDATED AND UNUSED - ALL CLEANING AND TRANSFORMATION NOW DONE IN SNOWFLAKE / DBT
 def extract_videos(jsn):
     """
     Filters json object with pandas and returns final cleaned video table

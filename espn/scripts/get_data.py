@@ -12,11 +12,4 @@ DB_URL = os.getenv("DB_URL") # Gets a specific environment variables
 engine = create_engine(DB_URL)
 metadata = MetaData()
 
-#
-games_table = Table(
-    'games',
-    metadata,
-    Column('id', String, primary_key=True),   # ESPN ID (string)
-    Column('name', String, nullable=False),   # Game name like "Lakers vs Warriors"
-    Column('date', String, nullable=False)    # Game date (we can later switch to DateTime)
-)
+
