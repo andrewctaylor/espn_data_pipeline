@@ -1,7 +1,7 @@
 import snowflake.connector
 import os
 
-# warehouse -> database -> schema
+# Returns connection object to snowflake db
 def connect_to_schema():
     conn = snowflake.connector.connect(
         user = os.getenv("SNOWFLAKE_USER"),
