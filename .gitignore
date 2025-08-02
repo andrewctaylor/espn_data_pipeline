@@ -8,4 +8,6 @@ __pycache__/
 # Environment variables
 .env
 
+# Database info
 .DS_Store
+/backend.snowflake_connect.py
