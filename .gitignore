@@ -10,4 +10,4 @@ __pycache__/
 
 # Database info
 .DS_Store
-/backend.snowflake_connect.py
+

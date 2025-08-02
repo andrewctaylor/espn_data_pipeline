@@ -6,10 +6,11 @@ from dotenv import load_dotenv
 
 # Loading environment
 load_dotenv() # parse .env and loads all variables
-DB_URL = os.getenv("DB_URL") # Gets a specific environment variables
+DB_URL = os.getenv("DB_URL")
 
-# Connect to Postgres
+# Connect to Postgres / outdated
 engine = create_engine(DB_URL)
+
 metadata = MetaData()
 
 
