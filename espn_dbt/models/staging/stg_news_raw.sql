@@ -3,5 +3,7 @@
 SELECT
     id,
     json_blob,
+    sport,
+    league,
     created_at
-FROM RAW.NEWS_RAW
+FROM RAW_JSON.NEWS_RAW
