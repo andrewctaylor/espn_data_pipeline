@@ -1,6 +1,6 @@
 import json
 import uuid
-from espn.backend.api import api_call
+from espn.backend.api_calls import api_call
 from espn.backend.snowflake_connect import connect_to_schema
 
 sports_leagues = [
