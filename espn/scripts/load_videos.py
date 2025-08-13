@@ -1,33 +1,59 @@
 import json
 import uuid
-from espn.backend.api import fetch_articles
+from espn.backend.api import api_call
 from espn.backend.snowflake_connect import connect_to_schema
 
-def load_raw_data(loc='postgres'): 
-    jsn = fetch_articles()
-    if loc == 'snowflake':
-        conn = connect_to_schema()
-        cur = conn.cursor()
-        # Insert into Snowflake
-        cur.execute("""
+sports_leagues = [
+    ("basketball", "nba"),
+    ("basketball", "mens-college-basketball"),
+    ("football", "nfl"),
+    ("football", "college-football"),
+    ("baseball", "mlb"),
+    ("hockey", "nhl"),
+    ("soccer", "usa.1"), 
+    ("mma", "ufc"),
+    ("golf", "pga"),
+    ("tennis", "atp")
+]
+
+
+def load_insert_raw(): 
+    conn = connect_to_schema()
+    cur = conn.cursor()
+    # Insert TABLE into Snowflake if not there
+    cur.execute("""
             CREATE TABLE IF NOT EXISTS news_raw (
-                id STRING,
-                json_blob VARIANT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
+            id STRING DEFAULT UUID_STRING(),
+            json_blob VARIANT,
+            sport STRING,
+            league STRING,
+            created_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP());
                     """)
-        
+    
+    # Iterates over every sports/league combination
+    rows = []
+    for sport, league in sports_leagues:
+        jsn = api_call(sport, league, "news")
+        if jsn in (None, [], {}):
+            continue
+        rows.append((json.dumps(jsn), str(sport), str(league)))
 
-        new_id = str(uuid.uuid4())
-        cur.execute("""
-            INSERT INTO news_raw (id, json_blob)
-            SELECT %s, PARSE_JSON(%s)
-            """, (new_id, json.dumps(jsn))
-            )
+    if not rows:
+        print("Nothing to insert.")
+    else:
+        placeholders = ", ".join(["(%s, %s, %s)"] * len(rows)) # "json, sport, league"
+        params = [item for row in rows for item in row]
+
+        sql = f"""
+            INSERT INTO news_raw (json_blob, sport, league)
+            SELECT TRY_PARSE_JSON(v.js), v.sp, v.lg
+            FROM (VALUES {placeholders}) AS v(js, sp, lg)
+        """
+        cur.execute(sql, params)
         conn.commit()
-        
 
-        cur.execute("SELECT * FROM news_raw")
-        print(cur.fetchall())
+    cur.execute("SELECT * FROM news_raw")
+    print("fetch all -> ", cur.fetchall())
 
-        cur.close()
-        conn.close()
+    cur.close()
+    conn.close()

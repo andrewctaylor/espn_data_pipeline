@@ -1,7 +1,9 @@
-from espn.scripts.load_videos import load_raw_data
+from espn.scripts.load_videos import load_insert_raw
 
 def main():
-    load_raw_data("snowflake")
+    # Loads then inserts raw JSON into Snowflake DB
+    load_insert_raw()
+
 
 
 if __name__ == "__main__":

@@ -6,7 +6,8 @@ def api_call(sport,league,type):
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
-        print(data)
+        print(f"{sport}/{league} call successful")
+        return data
     else:
         print(f"Request failed for {sport}/{league} with status: {response.status_code}") 
         
@@ -17,4 +18,5 @@ def fetch_articles():
     response = requests.get(url)
     response.raise_for_status()
     return response.json()
+
 
