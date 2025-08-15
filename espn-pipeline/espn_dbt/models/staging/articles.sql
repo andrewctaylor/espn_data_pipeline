@@ -4,7 +4,6 @@ WITH articles_cte AS (
   SELECT 
       article_object:id::INT                      AS article_id,
       article_object:byline::STRING               AS byline,
-      article_object:categories                   AS categories,
       article_object:dataSourceIdentifier::STRING AS dataSourceIdentifier,
       article_object:description::STRING          AS description,
       article_object:headline::STRING             AS headline,
