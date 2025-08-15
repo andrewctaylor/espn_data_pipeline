@@ -10,7 +10,6 @@ WITH articles_cte AS (
       article_object:headline::STRING             AS headline,
       article_object:lastModified::TIMESTAMP_NTZ  AS lastModified,
       league,
-      article_object:links                        AS links,
       article_object:nowId::STRING                AS nowId,
       article_object:premium::BOOLEAN             AS premium,
       article_object:published::TIMESTAMP_NTZ     AS published,
