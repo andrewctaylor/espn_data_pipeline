@@ -1,0 +1,51 @@
+services:
+  airflow-init:
+    build: .
+    env_file: .env
+    environment:
+      - _AIRFLOW_WWW_USER_USERNAME=airflow
+      - _AIRFLOW_WWW_USER_PASSWORD=airflow
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ../espn_etl:/opt/airflow/espn_etl
+      - ../espn_dbt:/opt/airflow/espn_dbt
+    command: ["bash","-c","airflow db init && airflow users create --username airflow --password airflow --firstname A --lastname U --role Admin --email a@u.com || true"]
+    restart: "no"
+
+  airflow-webserver:
+    build: .
+    env_file: .env
+    depends_on: [airflow-init, airflow-scheduler]
+    ports: ["8080:8080"]
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - PYTHONPATH=/opt/airflow/espn_etl
+      - DBT_PROJECT_DIR=/opt/airflow/espn_dbt
+      # (optional) if you keep profiles.yml in espn_dbt/.dbt
+      # - DBT_PROFILES_DIR=/opt/airflow/espn_dbt/.dbt
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ../espn_etl:/opt/airflow/espn_etl
+      - ../espn_dbt:/opt/airflow/espn_dbt
+    command: ["airflow","webserver"]
+
+  airflow-scheduler:
+    build: .
+    env_file: .env
+    depends_on: [airflow-init]
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - PYTHONPATH=/opt/airflow/espn_etl
+      - DBT_PROJECT_DIR=/opt/airflow/espn_dbt
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ../espn_etl:/opt/airflow/espn_etl
+      - ../espn_dbt:/opt/airflow/espn_dbt
+    command: ["airflow","scheduler"]
