@@ -1,28 +1,60 @@
 services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow -d airflow"]
+      interval: 5s
+      retries: 10
+
   airflow-init:
     build: .
     env_file: .env
+    depends_on:
+      postgres:
+        condition: service_healthy
     environment:
       - _AIRFLOW_WWW_USER_USERNAME=airflow
       - _AIRFLOW_WWW_USER_PASSWORD=airflow
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ../espn_etl:/opt/airflow/espn_etl
       - ../espn_dbt:/opt/airflow/espn_dbt
-    command: ["bash","-c","airflow db init && airflow users create --username airflow --password airflow --firstname A --lastname U --role Admin --email a@u.com || true"]
+    command: >
+      bash -c "
+      airflow db init &&
+      airflow users create
+        --username airflow
+        --password airflow
+        --firstname A
+        --lastname U
+        --role Admin
+        --email a@u.com || true
+      "
     restart: "no"
 
   airflow-webserver:
     build: .
     env_file: .env
-    depends_on: [airflow-init, airflow-scheduler]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
+      airflow-scheduler:
+        condition: service_started
     ports: ["8080:8080"]
     environment:
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
-      - PYTHONPATH=/opt/airflow/espn_etl
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - PYTHONPATH=/opt/airflow
       - DBT_PROJECT_DIR=/opt/airflow/espn_dbt
       # (optional) if you keep profiles.yml in espn_dbt/.dbt
       # - DBT_PROFILES_DIR=/opt/airflow/espn_dbt/.dbt
@@ -37,10 +69,15 @@ services:
   airflow-scheduler:
     build: .
     env_file: .env
-    depends_on: [airflow-init]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
     environment:
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
-      - PYTHONPATH=/opt/airflow/espn_etl
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - PYTHONPATH=/opt/airflow
       - DBT_PROJECT_DIR=/opt/airflow/espn_dbt
     volumes:
       - ./dags:/opt/airflow/dags

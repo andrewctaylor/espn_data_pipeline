@@ -4,26 +4,50 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 
-def hello():
-    print("✅ Hello from Airflow inside Docker!")
+DBT_PROJECT_DIR = "/opt/airflow/espn_dbt"
+DBT_PROFILES_DIR = f"{DBT_PROJECT_DIR}/.dbt"
+DBT_BIN = "/home/airflow/.local/bin/dbt"
+
+
+def run_etl():
+    from espn_etl.scripts.load_videos import load_insert_raw 
+    load_insert_raw()
+    print("✅ ETL finished")
 
 with DAG(
-    dag_id="smoke_test",
+    dag_id="espn_news_pipeline",
     start_date=datetime(2025, 8, 1),
-    schedule=None,              # manual only
+    schedule=None,  # manual for now
     catchup=False,
-    default_args={"retries": 0, "retry_delay": timedelta(minutes=1)},
-    tags=["test"],
+    default_args={"retries": 0, "retry_delay": timedelta(minutes=2)},
+    tags=["espn", "etl", "dbt"],
 ) as dag:
 
-    py = PythonOperator(
-        task_id="python_hello",
-        python_callable=hello,
+    # Pull JSON data from the ESPN API
+    pull_api = PythonOperator(
+        task_id="pull_api",
+        python_callable=run_etl,
     )
 
-    dbt_check = BashOperator(
-        task_id="dbt_check",
-        bash_command="dbt --version",   # proves dbt is installed in the image
+    # dbt setup (dependancies)
+    dbt_deps = BashOperator(
+        task_id="dbt_setup",
+        bash_command=f"cd $DBT_PROJECT_DIR && {DBT_BIN} deps",
+        env={"DBT_PROJECT_DIR": DBT_PROJECT_DIR, "DBT_PROFILES_DIR": DBT_PROFILES_DIR},
     )
 
-    py >> dbt_check
+    # Run dbt models
+    dbt_run = BashOperator(
+        task_id="dbt_run",
+        bash_command=f"cd $DBT_PROJECT_DIR && {DBT_BIN} run",
+        env={"DBT_PROJECT_DIR": DBT_PROJECT_DIR, "DBT_PROFILES_DIR": DBT_PROFILES_DIR},
+    )
+
+    # dbt testing
+    dbt_test = BashOperator(
+        task_id="dbt_test",
+        bash_command=f"cd $DBT_PROJECT_DIR && {DBT_BIN} test",
+        env={"DBT_PROJECT_DIR": DBT_PROJECT_DIR, "DBT_PROFILES_DIR": DBT_PROFILES_DIR},
+    )
+
+    pull_api >> dbt_deps >> dbt_run >> dbt_test

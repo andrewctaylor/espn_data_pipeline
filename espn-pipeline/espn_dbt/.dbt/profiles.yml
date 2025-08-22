@@ -1,0 +1,14 @@
+espn_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: ggjmket-vqb12267
+      user: andrewctaylor
+      password: Ucberktwins41442845!
+      role: ACCOUNTADMIN
+      warehouse: COMPUTE_WH
+      database: API_DATA_DB
+      schema: PUBLIC
+      threads: 4
+      client_session_keep_alive: true
