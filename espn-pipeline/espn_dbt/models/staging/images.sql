@@ -3,7 +3,8 @@
 WITH src AS (
     SELECT
         article_object:id::INT AS article_id,
-        article_object:images  AS images
+        article_object:images  AS images,
+        created_at
     FROM {{ ref('articles_raw') }}
     WHERE article_object:id IS NOT NULL
 ),
@@ -20,7 +21,8 @@ images_cte AS (
         images[0]:name::STRING as name,
         images[0]:type::STRING as type,
         images[0]:url::STRING as url,
-        images[0]:width::INT as width   
+        images[0]:width::INT as width,
+        created_at
     FROM src
 )
 

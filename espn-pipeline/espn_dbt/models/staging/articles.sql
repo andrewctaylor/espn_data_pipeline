@@ -13,7 +13,8 @@ WITH articles_cte AS (
       article_object:premium::BOOLEAN             AS premium,
       article_object:published::TIMESTAMP_NTZ     AS published,
       sport,                                       
-      article_object:type::STRING                 AS type
+      article_object:type::STRING                 AS type,
+      created_at
   FROM {{ ref('articles_raw') }}
 )
 

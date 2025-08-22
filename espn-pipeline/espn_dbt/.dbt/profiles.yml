@@ -9,6 +9,6 @@ espn_dbt:
       role: ACCOUNTADMIN
       warehouse: COMPUTE_WH
       database: API_DATA_DB
-      schema: PUBLIC
+      schema: MODELS
       threads: 4
       client_session_keep_alive: true

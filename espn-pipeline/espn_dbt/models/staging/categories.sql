@@ -20,6 +20,7 @@ WITH categories_cte AS (
         category_object:slug::STRING as slug,
         category_object:type::STRING as type,
         category_object:uid::STRING as uid,
+        created_at
     FROM {{ ref('categories_raw') }})
 
 SELECT DISTINCT * FROM categories_cte 

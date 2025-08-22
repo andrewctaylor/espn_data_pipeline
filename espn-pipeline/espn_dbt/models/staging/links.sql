@@ -3,7 +3,8 @@
 WITH src AS (
     SELECT
         article_object:id::INT AS article_id,
-        article_object:links  AS links
+        article_object:links  AS links,
+        created_at
     FROM {{ ref('articles_raw') }}
     WHERE article_object:id IS NOT NULL
 ),
@@ -14,7 +15,8 @@ links_cte AS(
         links:api:self:href::STRING as api,
         links:app:sportscenter:href::STRING as app,
         links:mobile:href::STRING as mobile,
-        links:web:self:href::STRING as web
+        links:web:self:href::STRING as web,
+        created_at
     FROM src
 )
 
