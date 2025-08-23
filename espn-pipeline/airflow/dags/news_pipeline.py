@@ -1,12 +1,14 @@
-import os
+import pendulum
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 
+
 DBT_PROJECT_DIR = "/opt/airflow/espn_dbt"
 DBT_PROFILES_DIR = f"{DBT_PROJECT_DIR}/.dbt"
 DBT_BIN = "/home/airflow/.local/bin/dbt"
+local_tz = pendulum.timezone("America/Los_Angeles")
 
 
 def run_etl():
@@ -16,11 +18,12 @@ def run_etl():
 
 with DAG(
     dag_id="espn_news_pipeline",
-    start_date=datetime(2025, 8, 1),
-    schedule=None,  # manual for now
+    start_date=pendulum.datetime(2025, 8, 23, 0, 0, tz=local_tz),
+    schedule="@daily",
     catchup=False,
     default_args={"retries": 0, "retry_delay": timedelta(minutes=2)},
     tags=["espn", "etl", "dbt"],
+    max_active_runs=1,
 ) as dag:
 
     # Pull JSON data from the ESPN API
