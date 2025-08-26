@@ -1,27 +1,25 @@
 # ESPN Article Data Pipeline
 
-
-
 An end-to-end **ELT data pipeline** that ingests live ESPN API data, loads it into **Snowflake**, transforms it with **dbt**, and orchestrates everything using **Apache Airflow**.
 
-I built this project for two reasons:
-    > I'm a big sports fan and discovered ESPN's public API a while ago. I particularly thought the API for ESPN's daily articles had potential for a fun project, and I noticed that this API wasn't being utilized by         many other projects. The data takes form as a decently-sized json object, so my goal was to build up a clean database overtime so that others may conviently use this public data.
-    > I've been looking for an excuse to learn many of the industry standard tools like Snowflake, dbt, and Apache Airflow, and this gave me the oppurtunity to do so.
+I built this project for two main reasons:
+1. **Sports + Data**: As a big sports fan, I discovered ESPN’s public API and noticed that its daily articles endpoint wasn’t widely used in other projects. Since the API returns rich JSON payloads, I wanted to build a clean, queryable database of ESPN articles over time — making this public data more accessible to others.
+2. **Learning Modern Data Tools**: I wanted hands-on experience with industry-standard tools like **Snowflake**, **dbt**, and **Apache Airflow**. This project gave me the opportunity to connect them all into a working pipeline.
 
 ---
 
 ## 🚀 Features
-- **Automated ingestion** from ESPN API (Python requests → JSON).
-- **Snowflake landing zone** for raw VARIANT data.
-- **dbt models** to transform and normalize JSON into fact/dimension tables.
+- **Automated ingestion** from ESPN’s public API (Python requests → JSON).
+- **Snowflake landing zone** for raw `VARIANT` JSON.
+- **dbt models** to normalize and transform JSON into fact/dimension tables.
 - **Airflow DAG** for orchestration (extract → load → transform → test).
-- **Deduplication** strategy to handle repeated API payloads.
+- **Deduplication** to prevent repeated payloads.
 - **Dockerized environment** for reproducibility.
 
 ---
 
 ## 📂 Repository Structure
-```
+```text
 .
 ├── airflow/               # Airflow orchestration
 │   ├── docker-compose.yaml
@@ -30,46 +28,46 @@ I built this project for two reasons:
 │   │   └── news_pipeline.py
 │   └── requirements.txt
 │
-├── espn_dbt/              # dbt models
+├── espn_dbt/              # dbt project
 │   ├── dbt_project.yml
 │   ├── models/
-│   │   ├── staging/
-│   │   └── analytics/
+│   │   ├── staging/       # flatten JSON into structured tables
+│   │   └── analytics/     # fact/dimension tables
 │   ├── seeds/
 │   ├── snapshots/
 │   └── tests/
 │
-└── espn_etl/              # Python Extract/Load + Snowflake Setup
+└── espn_etl/              # Python Extract/Load utilities
     ├── backend/
-    │   ├── api_calls.py
-    │   └── snowflake_connect.py
+    │   ├── api_calls.py           # pulls data from ESPN API
+    │   └── snowflake_connect.py   # inserts JSON into Snowflake
     └── scripts/
-        └── load_videos.py
+        └── load_videos.py         # CLI entrypoint for local runs
+
 ```
----
-
-## 🏗 Architecture
-
-         +-------------+
-         |  ESPN API   | 
-         +------+------+ 
-                |
-                v
-         +------+------------------+
-         |   Python Extract/Load   |   ← Request data from ESPN's public API
-         +-------+-----------------+
-                 |
-                 v
-         +-------+------------+
-         | Snowflake (RAW)    |   ← Insert raw json objects into Snowflake database
-         +----------+---------+
-                    |
-                    v
-         +----------+--------------------+
-         | dbt (Staging/Transformation)  |   ← Apply dbt transformations to create various tables inside Snowflake
-         +-----------+-------------------+
-                     |
-                     v
-         +-----------+----------+
-         | Airflow Orchestration|   ← Automate the entire pipeline to run daily
-         +----------------------+
+## 🏗 Data Pipeline
+```
+        +-------------+
+        |   ESPN API  |
+        +------+------+
+               |
+               v
+   +-----------+-----------+
+   | Python Extract/Load   |   ← Request data from ESPN API + load to Snowflake
+   +-----------+-----------+
+               |
+               v
+   +-----------+-----------+
+   |  Snowflake (RAW)      |   ← Store raw JSON (VARIANT column)
+   +-----------+-----------+
+               |
+               v
+   +-----------+-----------+
+   | dbt (Transformations) |   ← Staging + analytics models
+   +-----------+-----------+
+               |
+               v
+   +-----------+-----------+
+   | Airflow Orchestration |   ← DAG to run daily (ingest → transform → test)
+   +-----------------------+
+```
