@@ -24,25 +24,25 @@ An end-to-end **ELT data pipeline** that ingests live ESPN API data, loads it in
 ## 🏗 Architecture
 
          +-------------+
-         |   ESPN API  |
+         |  ESPN API   | 
          +------+------+ 
                 |
                 v
-        +-------+--------+
-        |   Python ETL   |   ← requests, pandas
-        +-------+--------+
-                |
-                v
-      +---------+----------+
-      | Snowflake (RAW)    |   ← json_blob (VARIANT)
-      +---------+----------+
-                |
-                v
-     +----------+----------+
-     | dbt (Staging/Core)  |   ← normalized tables
-     +----------+----------+
-                |
-                v
-     +----------+----------+
-     | Airflow Orchestration|
-     +----------------------+
+         +------+------------------+
+         |   Python Extract/Load   |   ← Request data from ESPN's public API
+         +-------+-----------------+
+                 |
+                 v
+         +-------+------------+
+         | Snowflake (RAW)    |   ← Insert raw json objects into Snowflake database
+         +----------+---------+
+                    |
+                    v
+         +----------+--------------------+
+         | dbt (Staging/Transformation)  |   ← Apply dbt transformations to create various tables inside Snowflake
+         +-----------+-------------------+
+                     |
+                     v
+         +-----------+----------+
+         | Airflow Orchestration|   ← Automate the entire pipeline to run daily
+         +----------------------+
