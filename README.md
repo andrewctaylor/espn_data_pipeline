@@ -17,7 +17,30 @@ An end-to-end **ELT data pipeline** that ingests live ESPN API data, loads it in
 ---
 
 ## 📂 Repository Structure
-
+ 
+.
+├── airflow/               # Airflow orchestration
+│   ├── docker-compose.yaml
+│   ├── Dockerfile
+│   ├── dags/
+│   │   └── news_pipeline.py
+│   └── requirements.txt
+│
+├── espn_dbt/              # dbt project
+│   ├── dbt_project.yml
+│   ├── models/
+│   │   ├── staging/
+│   │   └── analytics/
+│   ├── seeds/
+│   ├── snapshots/
+│   └── tests/
+│
+└── espn_etl/              # Python ETL package
+    ├── backend/
+    │   ├── api_calls.py
+    │   └── snowflake_connect.py
+    └── scripts/
+        └── load_videos.py
 
 ---
 
