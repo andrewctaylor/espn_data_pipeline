@@ -3,7 +3,7 @@
 An end-to-end **ELT data pipeline** that ingests live ESPN API data, loads it into **Snowflake**, transforms it with **dbt**, and orchestrates everything using **Apache Airflow**.
 
 I built this project for two main reasons:
-1. **Sports + Data**: As a big sports fan, I discovered ESPN’s public API and noticed that its daily articles endpoint wasn’t widely used in other projects. Since the API returns rich JSON payloads, I wanted to build a clean, queryable database of ESPN articles over time — making this public data more accessible to others.
+1. **Sports + Data**: As a big sports fan, I discovered ESPN’s public API and noticed that its daily articles endpoint wasn’t widely used in other projects. The API returns JSON payloads, so I wanted to build a clean/queryable database of ESPN articles over time. Hopefully this will help make this public data more accessible to others.
 2. **Learning Modern Data Tools**: I wanted hands-on experience with industry-standard tools like **Snowflake**, **dbt**, and **Apache Airflow**. This project gave me the opportunity to connect them all into a working pipeline.
 
 ---
@@ -71,3 +71,21 @@ I built this project for two main reasons:
    | Airflow Orchestration |   ← DAG to run daily (ingest → transform → test)
    +-----------------------+
 ```
+
+🗄 Data Model
+The pipeline follows a layered approach:
+RAW
+- RAW_JSON.NEWS_RAW
+- id (UUID)
+- json_blob (VARIANT)
+- sport, league
+- created_at
+  
+STAGING
+- STG_NEWS — flatten articles (IDs, headlines, timestamps, authors).
+- STG_TEAMS — normalize team metadata.
+  
+CORE (Analytics)
+- ARTICLES — deduplicated fact table of articles.
+- TEAMS — team dimension.
+ARTICLE_TEAM — bridge table (many-to-many link between articles and teams).
