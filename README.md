@@ -6,8 +6,7 @@ I built this project for two main reasons:
 1. **Sports + Data**: As a big sports fan, I discovered ESPN’s public API and noticed that its daily articles endpoint wasn’t widely used in other projects. The API returns JSON payloads, so I wanted to build a clean/queryable database of ESPN articles over time. Hopefully this will help make this public data more accessible to others.
 2. **Learning Modern Data Tools**: I wanted hands-on experience with industry-standard tools like **Snowflake**, **dbt**, and **Apache Airflow**. This project gave me the opportunity to self-learn them all while building this pipeline.
 
-***(This project is still being improved, any feedback/suggestions are welcomed and appriciated)***
----
+**(This project is still being improved, any feedback/suggestions are welcomed and appriciated)**
 
 ## 🚀 Features
 - **Automated ingestion** from ESPN’s public API via Python.
@@ -77,12 +76,11 @@ I built this project for two main reasons:
 ## ❄️ Data Model (Stored in Snowflake, built via dbt)
 All of the data is stored in a singular database called **API_DATA_DB**:
 ```
-
 ## RAW_JSON schema
 
 | Table              | Role                         | Key Columns                              |
 |--------------------|------------------------------|------------------------------------------|
-| `NEWS_RAW`         | Landing raw JSON payloads    | `id` (UUID), `created_at`                |
+| `NEWS_RAW`         | Stores raw JSON payloads     | `id` (UUID), `created_at`                |
 |                    |                              | `json_blob` (VARIANT), `sport`, `league` |
 
 ## MODELS schema
@@ -93,14 +91,10 @@ All of the data is stored in a singular database called **API_DATA_DB**:
 | `CATEGORIES` | Dimension   | `category_id`   | `article_id`         | ~18 additional features  |
 | `IMAGES`     | Dimension   | `image_id`      | `article_id`         | ~11 additional features  |
 | `LINKS`      | Dimension   | `link_id`       | `article_id`         | ~5 additional features   |
-
-
   
 STAGING
-- STG_NEWS — flatten articles (IDs, headlines, timestamps, authors).
-- STG_TEAMS — normalize team metadata.
+- STG_NEWS — move data from RAW schema to MODELS schema
+- ARTICLES_RAW - flatten raw JSON payloads into semi-structured JSON objects for articles
+- CATEGORIES_RAW - flatten article data into semi-structured JSON objects for categories
   
-CORE (Analytics)
-- ARTICLES — deduplicated fact table of articles.
-- TEAMS — team dimension.
-ARTICLE_TEAM — bridge table (many-to-many link between articles and teams).
+
