@@ -75,31 +75,26 @@ I built this project for two main reasons:
 
 🗄 Data Model (Snowflake)
 All of the data is stored in a singular database called **API_DATA_DB**:
+```
 
-    RAW (schema):
-        NEWS_RAW ← Table for inserting raw JSON payloads
-            - RAW_JSON.NEWS_RAW
-            - id (UUID)
-            - json_blob (VARIANT)
-            - sport, league
-            - created_at
-            
-    MODELS (schema):
-        ARTICLES ← Central Fact Table 
-            - article_id (primary key)
-            - 12 additional features
-        CATEGORIES (Dimension)
-            - category_id (primary key)
-            - article_id
-            - 18 additional features
-        IMAGES (Dimension)
-            - image_id (primary key)
-            - article_id
-            - 11 additional features
-        LINKS (Dimension)
-            - image_id (primary key)
-            - article_id
-            - 5 additional features
+    ## RAW (schema: RAW_JSON)
+
+| Table              | Role                         | Key Columns                   |
+|--------------------|------------------------------|-------------------------------|
+| `NEWS_RAW`         | Landing raw JSON payloads    | `id` (UUID), `created_at`     |
+|                    |                              | `json_blob` (VARIANT), `sport`, `league` |
+
+## MODELS (schema: MODELS)
+
+| Table        | Type        | Primary Key     | Foreign Keys         | Notes                    |
+|--------------|-------------|-----------------|----------------------|--------------------------|
+| `ARTICLES`   | Fact        | `article_id`    | —                    | ~12 additional features  |
+| `CATEGORIES` | Dimension   | `category_id`   | `article_id`         | ~18 additional features  |
+| `IMAGES`     | Dimension   | `image_id`      | `article_id`         | ~11 additional features  |
+| `LINKS`      | Dimension   | `link_id`*      | `article_id`         | ~5 additional features   |
+
+\* If `LINKS` truly has `image_id` as the PK, consider renaming it to `link_id` (or make the PK composite if needed).
+
   
 STAGING
 - STG_NEWS — flatten articles (IDs, headlines, timestamps, authors).
