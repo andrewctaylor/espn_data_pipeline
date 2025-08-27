@@ -9,13 +9,13 @@ I built this project for two main reasons:
 ---
 
 ## 🚀 Features
-- **Automated ingestion** from ESPN’s public API (Python requests + JSON).
-- **Snowflake landing zone** for raw `VARIANT` JSON.
-- **dbt models** to normalize and transform JSON into fact/dimension tables.
-- **Airflow DAG** for orchestration (extract → load → transform → test).
+- **Automated ingestion** from ESPN’s public API via Python.
+- **Snowflake** to store raw, staging, and analytical data.
+- **dbt models** to transform JSON into fact/dimension tables.
+- **Airflow DAG** for orchestration.
 - **Dockerized environment** for reproducibility.
 
-(**Primary tools used:** Snowflake, dbt, Apache Airflow, Docker)
+**Primary tools used:** Snowflake, dbt, Apache Airflow, Docker, Python
 
 ---
 
@@ -73,14 +73,33 @@ I built this project for two main reasons:
    +-----------------------+
 ```
 
-🗄 Data Model
-The pipeline follows a layered approach:
-RAW
-- RAW_JSON.NEWS_RAW
-- id (UUID)
-- json_blob (VARIANT)
-- sport, league
-- created_at
+🗄 Data Model (Snowflake)
+All of the data is stored in a singular database called **API_DATA_DB**:
+
+    RAW (schema):
+        NEWS_RAW ← Table for inserting raw JSON payloads
+            - RAW_JSON.NEWS_RAW
+            - id (UUID)
+            - json_blob (VARIANT)
+            - sport, league
+            - created_at
+            
+    MODELS (schema):
+        ARTICLES ← Central Fact Table 
+            - article_id (primary key)
+            - 12 additional features
+        CATEGORIES (Dimension)
+            - category_id (primary key)
+            - article_id
+            - 18 additional features
+        IMAGES (Dimension)
+            - image_id (primary key)
+            - article_id
+            - 11 additional features
+        LINKS (Dimension)
+            - image_id (primary key)
+            - article_id
+            - 5 additional features
   
 STAGING
 - STG_NEWS — flatten articles (IDs, headlines, timestamps, authors).
