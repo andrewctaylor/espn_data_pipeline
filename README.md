@@ -1,15 +1,16 @@
 # ESPN Article Data Pipeline
 
-An end-to-end **ELT data pipeline** that ingests live ESPN API data, loads it into **Snowflake**, transforms it with **dbt**, and orchestrates process using **Apache Airflow**.
+An end-to-end **ELT data pipeline** that ingests live ESPN API data, loads it into **Snowflake**, transforms it with **dbt**, and orchestrates the process using **Apache Airflow**.
 
 I built this project for two main reasons:
 1. **Sports + Data**: I'm a huge sports fan. Recently, I discovered ESPN’s public API and noticed that its live articles endpoint wasn’t widely used in other projects. The API returns JSON payloads, so I wanted to build a clean/queryable database of ESPN articles over time. Hopefully this will help make this public data more accessible to others.
 2. **Learning Modern Data Tools**: I wanted hands-on experience with industry-standard tools like **Snowflake**, **dbt**, and **Apache Airflow**. This project gave me a convenient excuse to self-learn them all while building this pipeline.
 
 **(This project is still being improved, any feedback/suggestions are welcomed and appriciated)**
+
 **Primary tools used:** Snowflake, dbt, Apache Airflow, Docker, Python
 
----
+
 
 ## 📂 Repository Structure
 ```text
@@ -21,11 +22,11 @@ I built this project for two main reasons:
 │   │   └── news_pipeline.py
 │   └── requirements.txt
 │
-├── espn_dbt/              # dbt project
+├── espn_dbt/              # dbt models
 │   ├── dbt_project.yml
 │   ├── models/
-│   │   ├── staging/       # flatten JSON into structured tables
-│   │   └── analytics/     # fact/dimension tables
+│   │   ├── staging/       
+│   │   └── analytics/     
 │   ├── seeds/
 │   ├── snapshots/
 │   └── tests/
@@ -33,9 +34,9 @@ I built this project for two main reasons:
 └── espn_etl/              # Python Extract/Load utilities
     ├── backend/
     │   ├── api_calls.py           # pulls data from ESPN API
-    │   └── snowflake_connect.py   # inserts JSON into Snowflake
+    │   └── snowflake_connect.py   # connects to Snowflake DB
     └── scripts/
-        └── load_videos.py         # CLI entrypoint for local runs
+        └── load_videos.py         # inserts JSON into Snowflake
 
 ```
 ## 🏗 Data Pipeline
@@ -51,7 +52,7 @@ I built this project for two main reasons:
                |
                v
    +-----------+-----------+
-   |  Snowflake (RAW)      |   ← Store raw JSON (VARIANT column)
+   |  Snowflake (RAW)      |   ← Store raw JSON payload
    +-----------+-----------+
                |
                v
@@ -84,9 +85,9 @@ All of the data is stored in a singular database called **API_DATA_DB**:
 | `IMAGES`     | Dimension   | `image_id`      | `article_id`         | ~11 additional features  |
 | `LINKS`      | Dimension   | `link_id`       | `article_id`         | ~5 additional features   |
   
-STAGING
+STAGING views
 - STG_NEWS — move data from RAW schema to MODELS schema
 - ARTICLES_RAW - flatten raw JSON payloads into semi-structured JSON objects for articles
 - CATEGORIES_RAW - flatten article data into semi-structured JSON objects for categories
-  
+```
 
