@@ -4,17 +4,18 @@ An end-to-end **ELT data pipeline** that ingests live ESPN API data, loads it in
 
 I built this project for two main reasons:
 1. **Sports + Data**: As a big sports fan, I discovered ESPN’s public API and noticed that its daily articles endpoint wasn’t widely used in other projects. The API returns JSON payloads, so I wanted to build a clean/queryable database of ESPN articles over time. Hopefully this will help make this public data more accessible to others.
-2. **Learning Modern Data Tools**: I wanted hands-on experience with industry-standard tools like **Snowflake**, **dbt**, and **Apache Airflow**. This project gave me the opportunity to connect them all into a working pipeline.
+2. **Learning Modern Data Tools**: I wanted hands-on experience with industry-standard tools like **Snowflake**, **dbt**, and **Apache Airflow**. This project gave me the opportunity to self-learn them all while building this pipeline.
 
 ---
 
 ## 🚀 Features
-- **Automated ingestion** from ESPN’s public API (Python requests → JSON).
+- **Automated ingestion** from ESPN’s public API (Python requests + JSON).
 - **Snowflake landing zone** for raw `VARIANT` JSON.
 - **dbt models** to normalize and transform JSON into fact/dimension tables.
 - **Airflow DAG** for orchestration (extract → load → transform → test).
-- **Deduplication** to prevent repeated payloads.
 - **Dockerized environment** for reproducibility.
+
+(**Primary tools used:** Snowflake, dbt, Apache Airflow, Docker)
 
 ---
 
