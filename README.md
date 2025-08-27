@@ -6,6 +6,7 @@ I built this project for two main reasons:
 1. **Sports + Data**: As a big sports fan, I discovered ESPN’s public API and noticed that its daily articles endpoint wasn’t widely used in other projects. The API returns JSON payloads, so I wanted to build a clean/queryable database of ESPN articles over time. Hopefully this will help make this public data more accessible to others.
 2. **Learning Modern Data Tools**: I wanted hands-on experience with industry-standard tools like **Snowflake**, **dbt**, and **Apache Airflow**. This project gave me the opportunity to self-learn them all while building this pipeline.
 
+***(This project is still being improved, any feedback/suggestions are welcomed and appriciated)***
 ---
 
 ## 🚀 Features
@@ -73,27 +74,26 @@ I built this project for two main reasons:
    +-----------------------+
 ```
 
-🗄 Data Model (Snowflake)
+## ❄️ Data Model (Stored in Snowflake, built via dbt)
 All of the data is stored in a singular database called **API_DATA_DB**:
 ```
 
-    ## RAW (schema: RAW_JSON)
+## RAW_JSON schema
 
-| Table              | Role                         | Key Columns                   |
-|--------------------|------------------------------|-------------------------------|
-| `NEWS_RAW`         | Landing raw JSON payloads    | `id` (UUID), `created_at`     |
+| Table              | Role                         | Key Columns                              |
+|--------------------|------------------------------|------------------------------------------|
+| `NEWS_RAW`         | Landing raw JSON payloads    | `id` (UUID), `created_at`                |
 |                    |                              | `json_blob` (VARIANT), `sport`, `league` |
 
-## MODELS (schema: MODELS)
+## MODELS schema
 
 | Table        | Type        | Primary Key     | Foreign Keys         | Notes                    |
 |--------------|-------------|-----------------|----------------------|--------------------------|
-| `ARTICLES`   | Fact        | `article_id`    | —                    | ~12 additional features  |
+| `ARTICLES`   | Fact        | `article_id`    |                      | ~12 additional features  |
 | `CATEGORIES` | Dimension   | `category_id`   | `article_id`         | ~18 additional features  |
 | `IMAGES`     | Dimension   | `image_id`      | `article_id`         | ~11 additional features  |
-| `LINKS`      | Dimension   | `link_id`*      | `article_id`         | ~5 additional features   |
+| `LINKS`      | Dimension   | `link_id`       | `article_id`         | ~5 additional features   |
 
-\* If `LINKS` truly has `image_id` as the PK, consider renaming it to `link_id` (or make the PK composite if needed).
 
   
 STAGING
