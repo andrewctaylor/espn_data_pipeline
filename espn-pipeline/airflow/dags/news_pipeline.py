@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
+from datetime import timedelta
 
 
 DBT_PROJECT_DIR = "/opt/airflow/espn_dbt"
@@ -19,7 +20,7 @@ def run_etl():
 with DAG(
     dag_id="espn_news_pipeline",
     start_date=pendulum.datetime(2025, 8, 23, 0, 0, tz=local_tz),
-    schedule="@daily",
+    schedule=timedelta(days=3),
     catchup=False,
     default_args={"retries": 0, "retry_delay": timedelta(minutes=2)},
     tags=["espn", "etl", "dbt"],
