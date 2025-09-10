@@ -13,7 +13,7 @@ local_tz = pendulum.timezone("America/Los_Angeles")
 
 
 def run_etl():
-    from espn_etl.scripts.load_videos import load_insert_raw 
+    from espn_etl.load_videos import load_insert_raw 
     load_insert_raw()
     print("✅ ETL finished")
 
