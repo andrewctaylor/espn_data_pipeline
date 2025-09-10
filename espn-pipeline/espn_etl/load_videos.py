@@ -1,7 +1,7 @@
 import json
 import uuid
 import requests
-from espn_etl.backend.snowflake_connect import connect_to_schema
+from snowflake_connect import connect_to_schema
 
 sports_leagues = [
     ("basketball", "nba"),

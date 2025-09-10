@@ -1,4 +1,4 @@
-from espn_etl.scripts.load_videos import load_insert_raw
+from load_videos import load_insert_raw
 
 if __name__ == "__main__":
     # Loads then inserts raw JSON into Snowflake DB
