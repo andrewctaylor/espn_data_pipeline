@@ -1,0 +1,99 @@
+[2025-09-15T00:19:46.278+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-09-15T00:19:46.289+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: espn_news_pipeline.pull_api manual__2025-09-15T00:19:43.083812+00:00 [queued]>
+[2025-09-15T00:19:46.291+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: espn_news_pipeline.pull_api manual__2025-09-15T00:19:43.083812+00:00 [queued]>
+[2025-09-15T00:19:46.291+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2025-09-15T00:19:46.297+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): pull_api> on 2025-09-15 00:19:43.083812+00:00
+[2025-09-15T00:19:46.300+0000] {standard_task_runner.py:64} INFO - Started process 147 to run task
+[2025-09-15T00:19:46.302+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'espn_news_pipeline', 'pull_api', 'manual__2025-09-15T00:19:43.083812+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/news_pipeline.py', '--cfg-path', '/tmp/tmpb6t910qw']
+[2025-09-15T00:19:46.303+0000] {standard_task_runner.py:91} INFO - Job 5: Subtask pull_api
+[2025-09-15T00:19:46.330+0000] {task_command.py:426} INFO - Running <TaskInstance: espn_news_pipeline.pull_api manual__2025-09-15T00:19:43.083812+00:00 [running]> on host 6055f7975071
+[2025-09-15T00:19:46.371+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='espn_news_pipeline' AIRFLOW_CTX_TASK_ID='pull_api' AIRFLOW_CTX_EXECUTION_DATE='2025-09-15T00:19:43.083812+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-09-15T00:19:43.083812+00:00'
+[2025-09-15T00:19:46.371+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-09-15T00:19:46.760+0000] {connection.py:408} INFO - Snowflake Connector for Python Version: 3.11.0, Python Version: 3.11.9, Platform: Linux-6.10.14-linuxkit-aarch64-with-glibc2.36
+[2025-09-15T00:19:46.760+0000] {connection.py:1258} INFO - This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity.
+[2025-09-15T00:19:47.391+0000] {connection.py:547} WARNING - Certificate did not match expected hostname: vqb12267.us-west-2.aws.snowflakecomputing.com. Certificate: {'subject': ((('commonName', '*.prod3.us-west-2.snowflakecomputing.com'),),), 'subjectAltName': [('DNS', '*.prod3.us-west-2.snowflakecomputing.com'), ('DNS', '*.us-west-2.snowflakecomputing.com'), ('DNS', '*.global.snowflakecomputing.com'), ('DNS', '*.snowflakecomputing.com'), ('DNS', '*.prod3.us-west-2.aws.snowflakecomputing.com')]}
+[2025-09-15T00:19:47.391+0000] {connectionpool.py:824} WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(CertificateError("hostname 'vqb12267.us-west-2.aws.snowflakecomputing.com' doesn't match either of '*.prod3.us-west-2.snowflakecomputing.com', '*.us-west-2.snowflakecomputing.com', '*.global.snowflakecomputing.com', '*.snowflakecomputing.com', '*.prod3.us-west-2.aws.snowflakecomputing.com'"))': /session/v1/login-request?request_id=1e0b5a77-38df-4cc1-8497-1ce05e189d48&databaseName=API_DATA_DB&schemaName=RAW_JSON&warehouse=espn_wh&request_guid=2866449f-6cf2-49e2-9334-6674ea8dce95
+[2025-09-15T00:19:47.499+0000] {connection.py:547} WARNING - Certificate did not match expected hostname: vqb12267.us-west-2.aws.snowflakecomputing.com. Certificate: {'subject': ((('commonName', '*.prod3.us-west-2.snowflakecomputing.com'),),), 'subjectAltName': [('DNS', '*.prod3.us-west-2.snowflakecomputing.com'), ('DNS', '*.us-west-2.snowflakecomputing.com'), ('DNS', '*.global.snowflakecomputing.com'), ('DNS', '*.snowflakecomputing.com'), ('DNS', '*.prod3.us-west-2.aws.snowflakecomputing.com')]}
+[2025-09-15T00:19:47.504+0000] {network.py:1029} ERROR - Failed to get the response. Hanging? method: post, url: https://VQB12267.us-west-2.aws.snowflakecomputing.com:443/session/v1/login-request?request_id=1e0b5a77-38df-4cc1-8497-1ce05e189d48&databaseName=API_DATA_DB&schemaName=RAW_JSON&warehouse=espn_wh&request_guid=2866449f-6cf2-49e2-9334-6674ea8dce95, headers:{'Content-Type': 'application/json', 'accept': 'application/snowflake', 'User-Agent': 'PythonConnector/3.11.0 (Linux-6.10.14-linuxkit-aarch64-with-glibc2.36) CPython/3.11.9', 'Content-Encoding': 'gzip'}, data: {"data": {"CLIENT_APP_ID": "PythonConnector", "CLIENT_APP_VERSION": "3.11.0", "SVN_REVISION": null, "ACCOUNT_NAME": "VQB12267", "LOGIN_NAME": "ANDREWCTAYLOR", "CLIENT_ENVIRONMENT": {"APPLICATION": "PythonConnector", "OS": "Linux", "OS_VERSION": "Linux-6.10.14-linuxkit-aarch64-with-glibc2.36", "PYTHON_VERSION": "3.11.9", "PYTHON_RUNTIME": "CPython", "PYTHON_COMPILER": "GCC 12.2.0", "OCSP_MODE": "FAIL_OPEN", "TRACING": 20, "LOGIN_TIMEOUT": null, "NETWORK_TIMEOUT": null, "SOCKET_TIMEOUT": null}, "PASSWORD": "**** "SESSION_PARAMETERS": {"CLIENT_PREFETCH_THREADS": 4}}}
+[2025-09-15T00:19:48.652+0000] {connection.py:547} WARNING - Certificate did not match expected hostname: vqb12267.us-west-2.aws.snowflakecomputing.com. Certificate: {'subject': ((('commonName', '*.prod3.us-west-2.snowflakecomputing.com'),),), 'subjectAltName': [('DNS', '*.prod3.us-west-2.snowflakecomputing.com'), ('DNS', '*.us-west-2.snowflakecomputing.com'), ('DNS', '*.global.snowflakecomputing.com'), ('DNS', '*.snowflakecomputing.com'), ('DNS', '*.prod3.us-west-2.aws.snowflakecomputing.com')]}
+[2025-09-15T00:19:48.652+0000] {connectionpool.py:824} WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(CertificateError("hostname 'vqb12267.us-west-2.aws.snowflakecomputing.com' doesn't match either of '*.prod3.us-west-2.snowflakecomputing.com', '*.us-west-2.snowflakecomputing.com', '*.global.snowflakecomputing.com', '*.snowflakecomputing.com', '*.prod3.us-west-2.aws.snowflakecomputing.com'"))': /session/v1/login-request?request_id=1e0379c3-2b55-4630-8097-1f2aa00f99bd&databaseName=API_DATA_DB&schemaName=RAW_JSON&warehouse=espn_wh&request_guid=ad3cf32e-fd22-4eae-a74e-5fca3da8caa8
+[2025-09-15T00:19:48.769+0000] {connection.py:547} WARNING - Certificate did not match expected hostname: vqb12267.us-west-2.aws.snowflakecomputing.com. Certificate: {'subject': ((('commonName', '*.prod3.us-west-2.snowflakecomputing.com'),),), 'subjectAltName': [('DNS', '*.prod3.us-west-2.snowflakecomputing.com'), ('DNS', '*.us-west-2.snowflakecomputing.com'), ('DNS', '*.global.snowflakecomputing.com'), ('DNS', '*.snowflakecomputing.com'), ('DNS', '*.prod3.us-west-2.aws.snowflakecomputing.com')]}
+[2025-09-15T00:19:48.774+0000] {network.py:1029} ERROR - Failed to get the response. Hanging? method: post, url: https://VQB12267.us-west-2.aws.snowflakecomputing.com:443/session/v1/login-request?request_id=1e0379c3-2b55-4630-8097-1f2aa00f99bd&databaseName=API_DATA_DB&schemaName=RAW_JSON&warehouse=espn_wh&request_guid=ad3cf32e-fd22-4eae-a74e-5fca3da8caa8, headers:{'Content-Type': 'application/json', 'accept': 'application/snowflake', 'User-Agent': 'PythonConnector/3.11.0 (Linux-6.10.14-linuxkit-aarch64-with-glibc2.36) CPython/3.11.9', 'Content-Encoding': 'gzip'}, data: {"data": {"CLIENT_APP_ID": "PythonConnector", "CLIENT_APP_VERSION": "3.11.0", "SVN_REVISION": null, "ACCOUNT_NAME": "VQB12267", "LOGIN_NAME": "ANDREWCTAYLOR", "CLIENT_ENVIRONMENT": {"APPLICATION": "PythonConnector", "OS": "Linux", "OS_VERSION": "Linux-6.10.14-linuxkit-aarch64-with-glibc2.36", "PYTHON_VERSION": "3.11.9", "PYTHON_RUNTIME": "CPython", "PYTHON_COMPILER": "GCC 12.2.0", "OCSP_MODE": "FAIL_OPEN", "TRACING": 20, "LOGIN_TIMEOUT": null, "NETWORK_TIMEOUT": null, "SOCKET_TIMEOUT": null}, "PASSWORD": "**** "SESSION_PARAMETERS": {"CLIENT_PREFETCH_THREADS": 4}}}
+[2025-09-15T00:19:48.775+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-09-15T00:19:48.776+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/connection.py", line 1392, in _authenticate
+    auth.authenticate(
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/auth/_auth.py", line 250, in authenticate
+    ret = self._rest._post_request(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/network.py", line 734, in _post_request
+    ret = self.fetch(
+          ^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/network.py", line 843, in fetch
+    ret = self._request_exec_wrapper(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/network.py", line 979, in _request_exec_wrapper
+    raise e
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/network.py", line 895, in _request_exec_wrapper
+    self._handle_unknown_error(method, full_url, headers, data, conn)
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/network.py", line 1034, in _handle_unknown_error
+    Error.errorhandler_wrapper(
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/errors.py", line 290, in errorhandler_wrapper
+    handed_over = Error.hand_to_other_handler(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/errors.py", line 348, in hand_to_other_handler
+    connection.errorhandler(connection, cursor, error_class, error_value)
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/errors.py", line 221, in default_errorhandler
+    raise error_class(
+snowflake.connector.errors.OperationalError: 250003: 250003: Failed to get the response. Hanging? method: post, url: https://VQB12267.us-west-2.aws.snowflakecomputing.com:443/session/v1/login-request?request_id=1e0b5a77-38df-4cc1-8497-1ce05e189d48&databaseName=API_DATA_DB&schemaName=RAW_JSON&warehouse=espn_wh&request_guid=2866449f-6cf2-49e2-9334-6674ea8dce95
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/news_pipeline.py", line 17, in run_etl
+    load_insert_raw()
+  File "/opt/airflow/espn_etl/load_videos.py", line 21, in load_insert_raw
+    conn = connect_to_schema()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/espn_etl/snowflake_connect.py", line 8, in connect_to_schema
+    conn = snowflake.connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/__init__.py", line 55, in Connect
+    return SnowflakeConnection(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/connection.py", line 451, in __init__
+    self.connect(**kwargs)
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/connection.py", line 756, in connect
+    self.__open_connection()
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/connection.py", line 1084, in __open_connection
+    self.authenticate_with_retry(self.auth_class)
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/connection.py", line 1364, in authenticate_with_retry
+    self._authenticate(auth_instance)
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/connection.py", line 1436, in _authenticate
+    raise auth_op from e
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/connection.py", line 1413, in _authenticate
+    auth_instance.handle_timeout(
+  File "/home/airflow/.local/lib/python3.11/site-packages/snowflake/connector/auth/by_plugin.py", line 212, in handle_timeout
+    raise error
+snowflake.connector.errors.OperationalError: 250001: 250001: Could not connect to Snowflake backend after 2 attempt(s).Aborting
+[2025-09-15T00:19:48.781+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=espn_news_pipeline, task_id=pull_api, run_id=manual__2025-09-15T00:19:43.083812+00:00, execution_date=20250915T001943, start_date=20250915T001946, end_date=20250915T001948
+[2025-09-15T00:19:48.789+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 5 for task pull_api (250001: 250001: Could not connect to Snowflake backend after 2 attempt(s).Aborting; 147)
+[2025-09-15T00:19:48.823+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2025-09-15T00:19:48.835+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-09-15T00:19:48.838+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

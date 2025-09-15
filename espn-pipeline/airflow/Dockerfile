@@ -1,11 +1,10 @@
-FROM apache/airflow:2.10.2-python3.11
+FROM apache/airflow:2.9.3-python3.11
+ARG AIRFLOW_VERSION=2.9.3
+ARG PYTHON_VERSION=3.11
+ARG CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
 
-USER root
-RUN apt-get update && apt-get install -y --no-install-recommends git \
-    && rm -rf /var/lib/apt/lists/*
-USER airflow
-
-ENV PATH="/home/airflow/.local/bin:${PATH}"
-
-COPY requirements.txt /tmp/requirements.txt
-RUN pip install --no-cache-dir -r /tmp/requirements.txt
+COPY requirements.txt /requirements.txt
+RUN pip install --no-cache-dir --upgrade pip \
+ && pip install --no-cache-dir -r /requirements.txt --constraint "${CONSTRAINT_URL}" \
+ && pip check
+WORKDIR /opt/airflow
