@@ -20,6 +20,9 @@ sports_leagues = [
 def load_insert_raw(): 
     conn = connect_to_schema()
     cur = conn.cursor()
+    cur.execute("SELECT CURRENT_ACCOUNT(), CURRENT_ROLE(), CURRENT_WAREHOUSE(), CURRENT_DATABASE(), CURRENT_SCHEMA()")
+    print("ctx:", cur.fetchone())
+
     # Insert TABLE into Snowflake if not there
     cur.execute("""
             CREATE TABLE IF NOT EXISTS news_raw (
@@ -30,9 +33,11 @@ def load_insert_raw():
             created_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP());
                     """)
     
+    
     # Iterates over every sports/league combination
     rows = []
     for sport, league in sports_leagues:
+        print("working on",sport,league)
         jsn = api_call(sport, league, "news")
         if jsn in (None, [], {}):
             continue
@@ -53,7 +58,7 @@ def load_insert_raw():
         conn.commit()
 
     cur.execute("SELECT * FROM news_raw")
-    print("fetch all -> ", cur.fetchall())
+    #print("fetch all -> ", cur.fetchall())
 
     cur.close()
     conn.close()
