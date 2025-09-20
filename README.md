@@ -11,19 +11,46 @@ I built this project for two main reasons:
 **Primary tools used:** Snowflake, dbt, Apache Airflow, Docker, Python
 
 # Setup
-Run `git clone https://github.com/espn_data_pipeline`
 
-Create a local `.env` folder with your credentials (See `.env-example`)
+## Prerequisites
+- Docker & Docker Compose
+- Git
 
-Navigate to `airflow` folder
+## 1) Clone the repo
+```bash
+git clone https://github.com/andrewctaylor/espn_data_pipeline.git
+cd espn_data_pipeline
+```
 
-Setup Airflow:
+## 2) Configure environment
+Copy the example and fill in your credentials.
+```bash
+cp .env-example .env
+# open .env and set values
+```
 
-Run `docker compose up airflow-init`
+## 3) Initialize Airflow
+Run database migrations and create the admin user (one-time).
+```bash
+cd airflow
+docker compose up airflow-init
+# you should specify the user and password in .env
+```
 
-Run `docker compose build`
+## 4) Launch services
+```bash
+docker compose up -d
+```
 
-Run `docker compose up -d`
+Open the Airflow UI at `http://localhost:8080`  
+Log in with the username/password you set in your `.env`.
+
+---
+
+### Notes
+- You usually won’t need to run `docker compose build` unless you have a local Dockerfile or changed the image.
+
+
 
 
 
