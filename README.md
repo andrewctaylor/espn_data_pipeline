@@ -2,6 +2,8 @@
 
 An end-to-end **ELT data pipeline** that ingests live ESPN API data, loads it into **Snowflake**, transforms it with **dbt**, and orchestrates the process using **Apache Airflow**.
 
+(This project is a still a work in progress!)
+
 I built this project for two main reasons:
 1. **Sports + Data**: I'm a huge sports fan. Recently, I discovered ESPN’s public API and noticed that its live articles endpoint wasn’t widely used in other projects. The API returns JSON payloads, so I wanted to build a clean/queryable database of ESPN articles over time. Hopefully this will help make this public data more accessible to others.
 2. **Learning Modern Data Tools**: I wanted hands-on experience with industry-standard tools like **Snowflake**, **dbt**, and **Apache Airflow**. This project gave me a convenient excuse to self-learn them all while building this pipeline.
