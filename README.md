@@ -12,12 +12,17 @@ I built this project for two main reasons:
 
 # Setup
 Run `git clone https://github.com/espn_data_pipeline`
+
 Create a local `.env` folder with your credentials (See `.env-example`)
+
 Navigate to `airflow` folder
 
 Setup Airflow:
+
 Run `docker compose up airflow-init`
+
 Run `docker compose build`
+
 Run `docker compose up -d`
 
 
