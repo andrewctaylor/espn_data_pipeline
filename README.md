@@ -12,31 +12,37 @@ I built this project for two main reasons:
 
 # Setup
 
-1. Clone the repo
-```bash
-git clone https://github.com/andrewctaylor/espn_data_pipeline.git
-cd espn_data_pipeline
-```
+1. **Clone the repo**
 
-2. Configure environment
-Copy the example and fill in your credentials.
-```bash
-cp .env-example .env
-# open .env and set values
-```
+   ```bash
+   git clone https://github.com/andrewctaylor/espn_data_pipeline.git
+   cd espn_data_pipeline
+   ```
 
-3. Initialize Airflow
-Run database migrations and create the admin user (one-time).
-```bash
-cd airflow
-docker compose up airflow-init
-# you should specify the user and password in .env
-```
+2. **Configure environment**
 
-4. Launch services
-```bash
-docker compose up -d
-```
+   Copy the example and fill in your credentials.
+
+   ```bash
+   cp .env-example .env
+   # open .env and set values
+   ```
+
+3. **Initialize Airflow** (one-time)
+
+   Run database migrations and create the admin user.
+
+   ```bash
+   cd airflow
+   docker compose up airflow-init
+   # user/password should be set in .env
+   ```
+
+4. **Launch services**
+
+   ```bash
+   docker compose up -d
+   ```
 
 Open the Airflow UI at `http://localhost:8080`  
 Log in with the username/password you set in your `.env`.
