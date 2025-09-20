@@ -12,24 +12,20 @@ I built this project for two main reasons:
 
 # Setup
 
-## Prerequisites
-- Docker & Docker Compose
-- Git
-
-## 1) Clone the repo
+1. Clone the repo
 ```bash
 git clone https://github.com/andrewctaylor/espn_data_pipeline.git
 cd espn_data_pipeline
 ```
 
-## 2) Configure environment
+2. Configure environment
 Copy the example and fill in your credentials.
 ```bash
 cp .env-example .env
 # open .env and set values
 ```
 
-## 3) Initialize Airflow
+3. Initialize Airflow
 Run database migrations and create the admin user (one-time).
 ```bash
 cd airflow
@@ -37,20 +33,14 @@ docker compose up airflow-init
 # you should specify the user and password in .env
 ```
 
-## 4) Launch services
+4. Launch services
 ```bash
 docker compose up -d
 ```
 
 Open the Airflow UI at `http://localhost:8080`  
 Log in with the username/password you set in your `.env`.
-
----
-
-### Notes
-- You usually won’t need to run `docker compose build` unless you have a local Dockerfile or changed the image.
-
-
+After this you should be abel to trigger the DAG manually and/or debug it
 
 
 
