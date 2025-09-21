@@ -1,0 +1,28 @@
+[2025-09-21T07:39:26.559+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-09-21T07:39:26.568+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: espn_news_pipeline.dbt_test manual__2025-09-21T07:39:06.864550+00:00 [queued]>
+[2025-09-21T07:39:26.570+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: espn_news_pipeline.dbt_test manual__2025-09-21T07:39:06.864550+00:00 [queued]>
+[2025-09-21T07:39:26.570+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2025-09-21T07:39:26.574+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): dbt_test> on 2025-09-21 07:39:06.864550+00:00
+[2025-09-21T07:39:26.576+0000] {standard_task_runner.py:64} INFO - Started process 298 to run task
+[2025-09-21T07:39:26.578+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'espn_news_pipeline', 'dbt_test', 'manual__2025-09-21T07:39:06.864550+00:00', '--job-id', '32', '--raw', '--subdir', 'DAGS_FOLDER/news_pipeline.py', '--cfg-path', '/tmp/tmppjtysja0']
+[2025-09-21T07:39:26.579+0000] {standard_task_runner.py:91} INFO - Job 32: Subtask dbt_test
+[2025-09-21T07:39:26.590+0000] {task_command.py:426} INFO - Running <TaskInstance: espn_news_pipeline.dbt_test manual__2025-09-21T07:39:06.864550+00:00 [running]> on host 11a2a2c2ea7e
+[2025-09-21T07:39:26.612+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='espn_news_pipeline' AIRFLOW_CTX_TASK_ID='dbt_test' AIRFLOW_CTX_EXECUTION_DATE='2025-09-21T07:39:06.864550+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-09-21T07:39:06.864550+00:00'
+[2025-09-21T07:39:26.612+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-09-21T07:39:26.616+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-09-21T07:39:26.616+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd $DBT_PROJECT_DIR && /home/airflow/.local/bin/dbt test']
+[2025-09-21T07:39:26.619+0000] {subprocess.py:86} INFO - Output:
+[2025-09-21T07:39:27.446+0000] {subprocess.py:93} INFO - [0m07:39:27  Running with dbt=1.8.9
+[2025-09-21T07:39:27.822+0000] {subprocess.py:93} INFO - [0m07:39:27  Registered adapter: snowflake=1.8.4
+[2025-09-21T07:39:27.904+0000] {subprocess.py:93} INFO - [0m07:39:27  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+[2025-09-21T07:39:27.909+0000] {subprocess.py:93} INFO - There are 1 unused configuration paths:
+[2025-09-21T07:39:27.911+0000] {subprocess.py:93} INFO - - models.espn_project.example
+[2025-09-21T07:39:27.985+0000] {subprocess.py:93} INFO - [0m07:39:27  Found 7 models, 464 macros
+[2025-09-21T07:39:27.986+0000] {subprocess.py:93} INFO - [0m07:39:27
+[2025-09-21T07:39:27.986+0000] {subprocess.py:93} INFO - [0m07:39:27  Nothing to do. Try checking your model configs and model specification args
+[2025-09-21T07:39:28.539+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-09-21T07:39:28.539+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-09-21T07:39:28.547+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=espn_news_pipeline, task_id=dbt_test, run_id=manual__2025-09-21T07:39:06.864550+00:00, execution_date=20250921T073906, start_date=20250921T073926, end_date=20250921T073928
+[2025-09-21T07:39:28.559+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-09-21T07:39:28.564+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-09-21T07:39:28.564+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
