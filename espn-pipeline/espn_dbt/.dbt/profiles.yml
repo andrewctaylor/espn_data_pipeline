@@ -4,10 +4,10 @@ espn_dbt:
     dev:
       type: snowflake
       account: ggjmket-vqb12267
-      user: andrewctaylor
-      password: Ucberktwins41442845!
+      user: airflow_espn_named
+      password: AirflowEspnPassword123
       role: ACCOUNTADMIN
-      warehouse: COMPUTE_WH
+      warehouse: ESPN_WH
       database: API_DATA_DB
       schema: MODELS
       threads: 4

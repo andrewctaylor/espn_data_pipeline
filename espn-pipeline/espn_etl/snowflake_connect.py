@@ -8,11 +8,12 @@ load_dotenv(find_dotenv(), override=True)
 
 def connect_to_schema():
     print("using account:", os.getenv("SNOWFLAKE_ACC"))
+    print("using PAT token for authentication")
     return snowflake.connector.connect(
-        user=os.getenv("SNOWFLAKE_USER"),
-        password=os.getenv("SNOWFLAKE_PAT"),
+        user="AIRFLOW_ESPN_NAMED",
+        password=os.getenv("SNOWFLAKE_PAT_TOKEN"),
         account="ggjmket-vqb12267",
-        warehouse="espn_wh",
+        warehouse="ESPN_WH",
         database="API_DATA_DB",
         schema="RAW_JSON",
         login_timeout=15,

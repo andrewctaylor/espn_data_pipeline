@@ -1,0 +1,50 @@
+[2025-09-21T00:23:57.284+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-09-21T00:23:57.294+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: espn_news_pipeline.dbt_run manual__2025-09-21T00:23:44.793516+00:00 [queued]>
+[2025-09-21T00:23:57.296+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: espn_news_pipeline.dbt_run manual__2025-09-21T00:23:44.793516+00:00 [queued]>
+[2025-09-21T00:23:57.296+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2025-09-21T00:23:57.300+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): dbt_run> on 2025-09-21 00:23:44.793516+00:00
+[2025-09-21T00:23:57.302+0000] {standard_task_runner.py:64} INFO - Started process 87 to run task
+[2025-09-21T00:23:57.304+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'espn_news_pipeline', 'dbt_run', 'manual__2025-09-21T00:23:44.793516+00:00', '--job-id', '17', '--raw', '--subdir', 'DAGS_FOLDER/news_pipeline.py', '--cfg-path', '/tmp/tmppsbesfh3']
+[2025-09-21T00:23:57.305+0000] {standard_task_runner.py:91} INFO - Job 17: Subtask dbt_run
+[2025-09-21T00:23:57.318+0000] {task_command.py:426} INFO - Running <TaskInstance: espn_news_pipeline.dbt_run manual__2025-09-21T00:23:44.793516+00:00 [running]> on host ec82c1b2067c
+[2025-09-21T00:23:57.339+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='espn_news_pipeline' AIRFLOW_CTX_TASK_ID='dbt_run' AIRFLOW_CTX_EXECUTION_DATE='2025-09-21T00:23:44.793516+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-09-21T00:23:44.793516+00:00'
+[2025-09-21T00:23:57.340+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-09-21T00:23:57.344+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-09-21T00:23:57.344+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd $DBT_PROJECT_DIR && /home/airflow/.local/bin/dbt run']
+[2025-09-21T00:23:57.347+0000] {subprocess.py:86} INFO - Output:
+[2025-09-21T00:23:58.224+0000] {subprocess.py:93} INFO - [0m00:23:58  Running with dbt=1.8.9
+[2025-09-21T00:23:58.664+0000] {subprocess.py:93} INFO - [0m00:23:58  Registered adapter: snowflake=1.8.4
+[2025-09-21T00:23:58.737+0000] {subprocess.py:93} INFO - [0m00:23:58  Unable to do partial parsing because profile has changed
+[2025-09-21T00:23:59.159+0000] {subprocess.py:93} INFO - [0m00:23:59  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+[2025-09-21T00:23:59.159+0000] {subprocess.py:93} INFO - There are 1 unused configuration paths:
+[2025-09-21T00:23:59.159+0000] {subprocess.py:93} INFO - - models.espn_project.example
+[2025-09-21T00:23:59.199+0000] {subprocess.py:93} INFO - [0m00:23:59  Found 7 models, 464 macros
+[2025-09-21T00:23:59.200+0000] {subprocess.py:93} INFO - [0m00:23:59
+[2025-09-21T00:23:59.787+0000] {subprocess.py:93} INFO - [0m00:23:59
+[2025-09-21T00:23:59.788+0000] {subprocess.py:93} INFO - [0m00:23:59  Finished running  in 0 hours 0 minutes and 0.59 seconds (0.59s).
+[2025-09-21T00:23:59.789+0000] {subprocess.py:93} INFO - [0m00:23:59  Encountered an error:
+[2025-09-21T00:23:59.789+0000] {subprocess.py:93} INFO - Runtime Error
+[2025-09-21T00:23:59.790+0000] {subprocess.py:93} INFO -   Database error while listing schemas in database "API_DATA_DB"
+[2025-09-21T00:23:59.790+0000] {subprocess.py:93} INFO -   Database Error
+[2025-09-21T00:23:59.790+0000] {subprocess.py:93} INFO -     250001 (08001): Failed to connect to DB: ggjmket-vqb12267.snowflakecomputing.com:443. Multi-factor authentication is required for this account. Log in to Snowsight to enroll.
+[2025-09-21T00:24:00.357+0000] {subprocess.py:97} INFO - Command exited with return code 2
+[2025-09-21T00:24:00.358+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-09-21T00:24:00.361+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 2.
+[2025-09-21T00:24:00.362+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=espn_news_pipeline, task_id=dbt_run, run_id=manual__2025-09-21T00:23:44.793516+00:00, execution_date=20250921T002344, start_date=20250921T002357, end_date=20250921T002400
+[2025-09-21T00:24:00.368+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 17 for task dbt_run (Bash command failed. The command returned a non-zero exit code 2.; 87)
+[2025-09-21T00:24:00.370+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2025-09-21T00:24:00.377+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-09-21T00:24:00.379+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

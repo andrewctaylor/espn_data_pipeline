@@ -22,10 +22,28 @@ def load_insert_raw():
     cur = conn.cursor()
     cur.execute("SELECT CURRENT_ACCOUNT(), CURRENT_ROLE(), CURRENT_WAREHOUSE(), CURRENT_DATABASE(), CURRENT_SCHEMA()")
     print("ctx:", cur.fetchone())
+    
+    # Check what databases are available
+    cur.execute("SHOW DATABASES")
+    databases = cur.fetchall()
+    print("Available databases:", [db[1] for db in databases])
+    
+    # Check what warehouses are available
+    cur.execute("SHOW WAREHOUSES")
+    warehouses = cur.fetchall()
+    print("Available warehouses:", [wh[0] for wh in warehouses])
+    
+    # Set the active warehouse (use the first available one)
+    if warehouses:
+        warehouse_name = warehouses[0][0]
+        print(f"Using warehouse: {warehouse_name}")
+        cur.execute(f"USE WAREHOUSE {warehouse_name}")
+    else:
+        print("No warehouses available!")
 
     # Insert TABLE into Snowflake if not there
     cur.execute("""
-            CREATE TABLE IF NOT EXISTS news_raw (
+            CREATE TABLE IF NOT EXISTS API_DATA_DB.RAW_JSON.news_raw (
             id STRING DEFAULT UUID_STRING(),
             json_blob VARIANT,
             sport STRING,
@@ -50,14 +68,14 @@ def load_insert_raw():
         params = [item for row in rows for item in row]
 
         sql = f"""
-            INSERT INTO news_raw (json_blob, sport, league)
+            INSERT INTO API_DATA_DB.RAW_JSON.news_raw (json_blob, sport, league)
             SELECT TRY_PARSE_JSON(v.js), v.sp, v.lg
             FROM (VALUES {placeholders}) AS v(js, sp, lg)
         """
         cur.execute(sql, params)
         conn.commit()
 
-    cur.execute("SELECT * FROM news_raw")
+    cur.execute("SELECT * FROM API_DATA_DB.RAW_JSON.news_raw")
     #print("fetch all -> ", cur.fetchall())
 
     cur.close()

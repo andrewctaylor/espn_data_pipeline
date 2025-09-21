@@ -46,3 +46,51 @@
 [2025-09-18T00:01:31.170+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
 [2025-09-18T00:01:31.193+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
 [2025-09-18T00:01:31.195+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-09-20T22:24:58.418+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-09-20T22:24:58.429+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: espn_news_pipeline.pull_api scheduled__2025-09-15T00:00:00+00:00 [queued]>
+[2025-09-20T22:24:58.431+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: espn_news_pipeline.pull_api scheduled__2025-09-15T00:00:00+00:00 [queued]>
+[2025-09-20T22:24:58.431+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2025-09-20T22:24:58.436+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): pull_api> on 2025-09-15 00:00:00+00:00
+[2025-09-20T22:24:58.438+0000] {standard_task_runner.py:64} INFO - Started process 59 to run task
+[2025-09-20T22:24:58.440+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'espn_news_pipeline', 'pull_api', 'scheduled__2025-09-15T00:00:00+00:00', '--job-id', '2', '--raw', '--subdir', 'DAGS_FOLDER/news_pipeline.py', '--cfg-path', '/tmp/tmp3g0fdfkw']
+[2025-09-20T22:24:58.442+0000] {standard_task_runner.py:91} INFO - Job 2: Subtask pull_api
+[2025-09-20T22:24:58.458+0000] {task_command.py:426} INFO - Running <TaskInstance: espn_news_pipeline.pull_api scheduled__2025-09-15T00:00:00+00:00 [running]> on host 27ea88c29fa3
+[2025-09-20T22:24:58.483+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='espn_news_pipeline' AIRFLOW_CTX_TASK_ID='pull_api' AIRFLOW_CTX_EXECUTION_DATE='2025-09-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-09-15T00:00:00+00:00'
+[2025-09-20T22:24:58.483+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-09-20T22:24:58.814+0000] {logging_mixin.py:188} INFO - using account: ggjmket-vqb12267
+[2025-09-20T22:24:58.814+0000] {connection.py:408} INFO - Snowflake Connector for Python Version: 3.11.0, Python Version: 3.11.9, Platform: Linux-6.10.14-linuxkit-aarch64-with-glibc2.36
+[2025-09-20T22:24:58.814+0000] {connection.py:1258} INFO - This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity.
+[2025-09-20T22:25:00.216+0000] {cursor.py:1149} INFO - Number of results in first chunk: 1
+[2025-09-20T22:25:00.219+0000] {logging_mixin.py:188} INFO - ctx: ('WBB71043', 'ACCOUNTADMIN', 'ESPN_WH', 'API_DATA_DB', 'RAW_JSON')
+[2025-09-20T22:25:00.619+0000] {cursor.py:1149} INFO - Number of results in first chunk: 1
+[2025-09-20T22:25:00.620+0000] {logging_mixin.py:188} INFO - working on basketball nba
+[2025-09-20T22:25:00.762+0000] {logging_mixin.py:188} INFO - basketball/nba call successful
+[2025-09-20T22:25:00.764+0000] {logging_mixin.py:188} INFO - working on basketball mens-college-basketball
+[2025-09-20T22:25:00.867+0000] {logging_mixin.py:188} INFO - basketball/mens-college-basketball call successful
+[2025-09-20T22:25:00.869+0000] {logging_mixin.py:188} INFO - working on football nfl
+[2025-09-20T22:25:00.959+0000] {logging_mixin.py:188} INFO - football/nfl call successful
+[2025-09-20T22:25:00.961+0000] {logging_mixin.py:188} INFO - working on football college-football
+[2025-09-20T22:25:01.055+0000] {logging_mixin.py:188} INFO - football/college-football call successful
+[2025-09-20T22:25:01.058+0000] {logging_mixin.py:188} INFO - working on baseball mlb
+[2025-09-20T22:25:01.155+0000] {logging_mixin.py:188} INFO - baseball/mlb call successful
+[2025-09-20T22:25:01.157+0000] {logging_mixin.py:188} INFO - working on hockey nhl
+[2025-09-20T22:25:01.435+0000] {logging_mixin.py:188} INFO - hockey/nhl call successful
+[2025-09-20T22:25:01.438+0000] {logging_mixin.py:188} INFO - working on soccer usa.1
+[2025-09-20T22:25:01.558+0000] {logging_mixin.py:188} INFO - soccer/usa.1 call successful
+[2025-09-20T22:25:01.561+0000] {logging_mixin.py:188} INFO - working on mma ufc
+[2025-09-20T22:25:01.781+0000] {logging_mixin.py:188} INFO - mma/ufc call successful
+[2025-09-20T22:25:01.785+0000] {logging_mixin.py:188} INFO - working on golf pga
+[2025-09-20T22:25:01.882+0000] {logging_mixin.py:188} INFO - golf/pga call successful
+[2025-09-20T22:25:01.884+0000] {logging_mixin.py:188} INFO - working on tennis atp
+[2025-09-20T22:25:02.090+0000] {logging_mixin.py:188} INFO - tennis/atp call successful
+[2025-09-20T22:25:03.875+0000] {cursor.py:1149} INFO - Number of results in first chunk: 1
+[2025-09-20T22:25:05.114+0000] {cursor.py:1149} INFO - Number of results in first chunk: 5
+[2025-09-20T22:25:05.115+0000] {connection.py:773} INFO - closed
+[2025-09-20T22:25:05.185+0000] {connection.py:779} INFO - No async queries seem to be running, deleting session
+[2025-09-20T22:25:05.264+0000] {logging_mixin.py:188} INFO - ✅ ETL finished
+[2025-09-20T22:25:05.264+0000] {python.py:237} INFO - Done. Returned value was: None
+[2025-09-20T22:25:05.265+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-09-20T22:25:05.273+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=espn_news_pipeline, task_id=pull_api, run_id=scheduled__2025-09-15T00:00:00+00:00, execution_date=20250915T000000, start_date=20250920T222458, end_date=20250920T222505
+[2025-09-20T22:25:05.308+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-09-20T22:25:05.320+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-09-20T22:25:05.321+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
