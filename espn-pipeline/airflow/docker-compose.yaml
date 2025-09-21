@@ -10,6 +10,7 @@ services:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
+      - ./airflow/keys:/opt/airflow/airflow/keys
       - ../espn_etl:/opt/airflow/espn_etl
       - ../espn_dbt:/opt/airflow/espn_dbt
       - airflow-sqlite:/opt/airflow
@@ -36,6 +37,7 @@ services:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
+      - ./airflow/keys:/opt/airflow/airflow/keys
       - ../espn_etl:/opt/airflow/espn_etl
       - ../espn_dbt:/opt/airflow/espn_dbt
       - airflow-sqlite:/opt/airflow
